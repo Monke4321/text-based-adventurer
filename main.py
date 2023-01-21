@@ -23,13 +23,18 @@ async def main():
     _screenWidth = 400
     _screenHeight = 500
     _grass = (0, 255, 0)
-    _player = (0, 0, 255)
+    _player = (255, 255, 255)
     _cellSize = 32
+    _img = pygame.image.load("game/player.png").convert_alpha()
     while _run:
         for event in pygame.event.get():
             _clock.tick(30)
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x-1, z-1, _screenWidth+1, _screenHeight+1))
-            pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x*_cellSize, z*_cellSize, _cellSize, _cellSize))
+            screen.blit(_img, (x*_cellSize, z*_cellSize))
+            for i in range(len(worldmap)):
+                for j in range(len(worldmap[i])):
+                    if worldmap[i][j] == 1:
+                        pygame.draw.rect(screen, _grass, pygame.Rect(j*_cellSize, i*_cellSize, _cellSize, _cellSize))
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w:
                     z -= 1
